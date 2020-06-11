@@ -40,7 +40,7 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send('Unable to open googlesheet!')
 
 
-    @commands.command()
+    @commands.command(name='family', aliases=['fam'])
     async def family(self, ctx, guild):
 
         try: # try to open google sheet
@@ -58,9 +58,45 @@ class GoogleSheetData(commands.Cog):
                 df = df.sort_values('Family CP', ascending=False)
 
                 # discord bot message design
-                embed = discord.Embed(title = f'{guild.upper()} CP', color = discord.Color.red())
+                embed = discord.Embed(title = f'{guild.upper()}FAMILY CP', color = discord.Color.red())
                 embed.add_field(name='__**Family Name**__', value=df['Family Name'].to_string(index=False), inline=True)
                 embed.add_field(name='__**Family CP**__', value=df['Family CP'].to_string(index=False), inline=True)
+
+                await ctx.channel.send(embed=embed) 
+            except:
+                await ctx.channel.send('No Guild Found!')
+        except:
+            await ctx.channel.send('Unable to open googlesheet!')
+
+
+    @commands.command(name='strength', aliases=['str'])
+    async def strength(self, ctx, guild):
+
+        try: # try to open google sheet
+            gc = gspread.service_account(filename='credentials.json')
+            sh = gc.open_by_key(os.getenv('SHEETKEY'))
+
+            try: # try to retrieve data
+                worksheet = sh.worksheet(guild.upper())
+
+                guild_data = worksheet.get('B5:E53')
+                headers = guild_data.pop(0)
+                df = pd.DataFrame(guild_data, columns=headers)
+                # convert string to int
+                df['CP'] = pd.to_numeric(df['CP'])
+
+                # use pandas build-in function to calculate the stats then convert it to dict
+                dict_desc = df['CP'].describe()
+                dict_desc = dict_desc.round(0).astype(int)
+                dict_desc = dict_desc.to_dict()
+
+                dKeys = '\n'.join(list(dict_desc.keys()))
+                dValue = '\n'.join(map(str, list(dict_desc.values())))
+
+                # discord bot message design
+                embed = discord.Embed(title = f'{guild.upper()} STRENGTH', color = discord.Color.red())
+                embed.add_field(name='__**Stats**__',value=dKeys, inline=True)
+                embed.add_field(name='__**Value**__',value=dValue, inline=True)
 
                 await ctx.channel.send(embed=embed) 
             except:

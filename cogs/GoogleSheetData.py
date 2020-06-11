@@ -36,7 +36,8 @@ class GoogleSheetData(commands.Cog):
             average = round(df['CP'].mean()).astype(int)
 
             # discord bot message design
-            embed = discord.Embed(title = f'{guild.upper()} CP', description = f'{guild.upper()} has an average of {average} CP', color = discord.Color.blue())
+            embed = discord.Embed(description = f'{guild.upper()} has an average of {average} CP', color = discord.Color(0xe81300))
+            embed.set_author(name=f'XVII Bot | {guild.upper()} CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             # embed.set_thumbnail(url=ctx.guild.icon_url)
             embed.add_field(name='__**Family Name**__', value=df['Family Name'].to_string(index=False), inline=True)
             embed.add_field(name='__**CP**__', value=df['CP'].to_string(index=False), inline=True)
@@ -55,7 +56,8 @@ class GoogleSheetData(commands.Cog):
             df = df.sort_values('Family CP', ascending=False)
 
             # discord bot message design
-            embed = discord.Embed(title = f'{guild.upper()} FAMILY CP', color = discord.Color.red())
+            embed = discord.Embed(color = discord.Color(0x08ffde))
+            embed.set_author(name=f'XVII Bot | {guild.upper()} Family CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             embed.add_field(name='__**Family Name**__', value=df['Family Name'].to_string(index=False), inline=True)
             embed.add_field(name='__**Family CP**__', value=df['Family CP'].to_string(index=False), inline=True)
 
@@ -79,7 +81,8 @@ class GoogleSheetData(commands.Cog):
             dValue = '\n'.join(map(str, list(dict_desc.values())))
 
             # discord bot message design
-            embed = discord.Embed(title = f'{guild.upper()} STRENGTH', color = discord.Color.red())
+            embed = discord.Embed(color = discord.Color(0x8934ba))
+            embed.set_author(name=f'XVII Bot | {guild.upper()} Strength', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             embed.add_field(name='__**Stats**__',value=dKeys, inline=True)
             embed.add_field(name='__**Value**__',value=dValue, inline=True)
 

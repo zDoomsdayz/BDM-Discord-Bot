@@ -20,6 +20,7 @@ async def help(ctx):
     embed.add_field(name='__**Guild Family CP**__', value='**x!family guild or x!fam guild**\nExample: `x!fam xvii`', inline=False)
     embed.add_field(name='__**Guild Strength**__', value='**x!strength guild or x!str guild**\nExample: `x!str xvii`', inline=False)
     embed.add_field(name='__**Guild Class**__', value='**x!class guild**\nExample: `x!class xvii`', inline=False)
+    embed.add_field(name='__**Node War**__', value='Example: `x!node`', inline=False)
     await ctx.channel.send(embed=embed)
 
 

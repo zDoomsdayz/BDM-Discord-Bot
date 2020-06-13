@@ -31,7 +31,8 @@ class GoogleSheetData(commands.Cog):
         try:
             df = self.get_data_frame(ctx, guild)
 
-            df['CP'] = pd.to_numeric(df['CP'])
+            df['CP'] = pd.to_numeric(df['CP']).fillna(0)
+            df['CP'] = df['CP'].round(0).astype(int)
             df = df.sort_values('CP', ascending=False)
 
             average = round(df['CP'].mean()).astype(int)
@@ -58,7 +59,8 @@ class GoogleSheetData(commands.Cog):
         try:
             df = self.get_data_frame(ctx, guild)
 
-            df['Family CP'] = pd.to_numeric(df['Family CP'])
+            df['Family CP'] = pd.to_numeric(df['Family CP']).fillna(0)
+            df['Family CP'] = df['Family CP'].round(0).astype(int)
             df = df.sort_values('Family CP', ascending=False)
 
             text = df.set_index('Family Name')['Family CP'].to_dict()
@@ -80,7 +82,7 @@ class GoogleSheetData(commands.Cog):
         try:
             df = self.get_data_frame(ctx, guild)
 
-            df['CP'] = pd.to_numeric(df['CP'])
+            df['CP'] = pd.to_numeric(df['CP']).fillna(0)
 
             # use pandas build-in function to calculate the stats then convert it to dict
             dict_desc = df['CP'].describe()
@@ -106,7 +108,8 @@ class GoogleSheetData(commands.Cog):
 
         df = self.get_data_frame(ctx, guild)
 
-        df['CP'] = pd.to_numeric(df['CP'])
+        df['CP'] = pd.to_numeric(df['CP']).fillna(0)
+        df['CP'] = df['CP'].round(0).astype(int)
         df = df.sort_values(['Class', 'CP'], ascending=False)
 
         # easier comparison

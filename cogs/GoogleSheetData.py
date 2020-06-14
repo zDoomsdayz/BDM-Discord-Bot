@@ -28,6 +28,7 @@ class GoogleSheetData(commands.Cog):
 
     @commands.command()
     async def cp(self, ctx, guild):
+
         try:
             df = self.get_data_frame(ctx, guild)
 
@@ -56,6 +57,7 @@ class GoogleSheetData(commands.Cog):
 
     @commands.command(name='family', aliases=['fam'])
     async def family(self, ctx, guild):
+
         try:
             df = self.get_data_frame(ctx, guild)
 
@@ -79,6 +81,7 @@ class GoogleSheetData(commands.Cog):
 
     @commands.command(name='strength', aliases=['str'])
     async def strength(self, ctx, guild):
+
         try:
             df = self.get_data_frame(ctx, guild)
 
@@ -138,52 +141,54 @@ class GoogleSheetData(commands.Cog):
     @commands.command(name='node')
     async def node(self, ctx, display_type):
 
-        if display_type == 'role' or display_type == 'all':
-
-            # login and open google sheet
-            gc = gspread.service_account(filename='credentials.json')
-            sh = gc.open_by_key(os.getenv('SHEETKEY'))
-
-            # go to that worksheet
-            worksheet = sh.worksheet('War log')
-            war_role = worksheet.get('B4:B8')
-            war_member = worksheet.get('C4:C8')
-            leader = worksheet.get('B9:B9')
-
-             # discord bot message design
-            embed = discord.Embed(color = discord.Color(0x9bff8a))
-            embed.set_author(name=f'XVII Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
-            embed.set_footer(text=f'📢 {"".join(leader[0])}')
-            for i in range(len(war_role)):
-                embed.add_field(
-                    name=f'__**{"".join(war_role[i])}**__',
-                    value=f'{"".join(war_member[i])}', 
-                    inline=False)
-            if display_type == 'role':
-                channel = self.bot.get_channel(661865146280312834)
-                embed.add_field(name='\u200b',
-                    value=f'**For more info, please use `x!node all` command at** {channel.mention}', inline=True)
-
-            await ctx.channel.send(embed=embed)
-
-            if display_type == 'all':
-                # strategy1 embed design
-                strategy1 = worksheet.get('B11:B12')
-                s1_embed = discord.Embed(description = 
-                        f'{"".join(strategy1[1])}',
-                        color = discord.Color(0x9bff8a))
-                s1_embed.set_author(name=f'XVII Bot | {"".join(strategy1[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
-                await ctx.channel.send(embed=s1_embed)
-
-                # strategy2 embed design
-                strategy2 = worksheet.get('B14:B15')
-                s2_embed = discord.Embed(description = 
-                        f'{"".join(strategy2[1])}',
-                        color = discord.Color(0x9bff8a))
-                s2_embed.set_author(name=f'XVII Bot | {"".join(strategy2[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
-                await ctx.channel.send(embed=s2_embed)
-        else:
+        if display_type != 'role' and display_type != 'all':
             await ctx.channel.send('`x!node role` or `x!node all` **only.**')
+            return
+
+        # login and open google sheet
+        gc = gspread.service_account(filename='credentials.json')
+        sh = gc.open_by_key(os.getenv('SHEETKEY'))
+
+        # go to that worksheet
+        worksheet = sh.worksheet('War log')
+        war_role = worksheet.get('B4:B8')
+        war_member = worksheet.get('C4:C8')
+        leader = worksheet.get('B9:B9')
+
+         # discord bot message design
+        embed = discord.Embed(color = discord.Color(0x9bff8a))
+        embed.set_author(name=f'XVII Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+        embed.set_footer(text=f'📢 {"".join(leader[0])}')
+        for i in range(len(war_role)):
+            embed.add_field(
+                name=f'__**{"".join(war_role[i])}**__',
+                value=f'{"".join(war_member[i])}', 
+                inline=False)
+
+        if display_type == 'role':
+            channel = self.bot.get_channel(661865146280312834)
+            embed.add_field(name='\u200b',
+                value=f'**For more info, please use `x!node all` command at** {channel.mention}', inline=True)
+
+        await ctx.channel.send(embed=embed)
+
+        if display_type == 'all':
+            # strategy1 embed design
+            strategy1 = worksheet.get('B11:B12')
+            s1_embed = discord.Embed(description = 
+                    f'{"".join(strategy1[1])}',
+                    color = discord.Color(0x9bff8a))
+            s1_embed.set_author(name=f'XVII Bot | {"".join(strategy1[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            await ctx.channel.send(embed=s1_embed)
+
+            # strategy2 embed design
+            strategy2 = worksheet.get('B14:B15')
+            s2_embed = discord.Embed(description = 
+                    f'{"".join(strategy2[1])}',
+                    color = discord.Color(0x9bff8a))
+            s2_embed.set_author(name=f'XVII Bot | {"".join(strategy2[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            await ctx.channel.send(embed=s2_embed)
+            
 
     ''' #ON HOLD FIRST TILL EVERYTHING IN THE GOOGLESHEET IS DONE PROPERLY
     @commands.command(name='siege')

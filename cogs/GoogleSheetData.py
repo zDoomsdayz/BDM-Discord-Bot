@@ -134,7 +134,9 @@ class GoogleSheetData(commands.Cog):
             roles = roles.set_index('Family Name')['CP'].to_dict()
             roles = '\n'.join([f'`{key}{" " * (15 - len(key))}{value}`' for (key, value) in roles.items()])
 
-            embed.add_field(name=f'__**{list(class_dict.keys())[i].title()}**__ - {list(class_dict.values())[i]}',value=roles, inline=True)
+            embed.add_field(
+                name='\u200b',
+                value=f'__**{list(class_dict.keys())[i].title()} - {list(class_dict.values())[i]}**__\n{roles}', inline=True)
 
         await ctx.channel.send(embed=embed)
 
@@ -158,12 +160,14 @@ class GoogleSheetData(commands.Cog):
          # discord bot message design
         embed = discord.Embed(color = discord.Color(0x9bff8a))
         embed.set_author(name=f'XVII Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
-        embed.set_footer(text=f'📢 {"".join(leader[0])}')
+
         for i in range(len(war_role)):
             embed.add_field(
-                name=f'__**{"".join(war_role[i])}**__',
-                value=f'{"".join(war_member[i])}', 
+                name='\u200b',
+                value=f'**{"".join(war_role[i])}**\n{"".join(war_member[i])}', 
                 inline=False)
+
+        embed.add_field(name='\u200b',value=f'📢 {"".join(leader[0])}', inline=False)
 
         if display_type == 'role':
             channel = self.bot.get_channel(661865146280312834)

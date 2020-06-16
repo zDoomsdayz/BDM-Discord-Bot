@@ -8,6 +8,24 @@ import operator
 class GoogleSheetData(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.emotes = {
+            "Witch":722375515734016090,
+            "Warrior":722375515591278612,
+            "Valkyrie":722375515926954024,
+            "Striker":722375515566112788,
+            "Sorceress":722375517147496489,
+            "Ranger":722375516480340021,
+            "Giant":722375515243282464,
+            "DarkKnight":722375516140732426,
+            "confusedcat":702072774247579679,
+            }
+
+    def GetEmotes(self, key):
+
+        for k,v in self.emotes.items():
+            if k == key:
+                return f'<:{k}:{v}>'
+        return f'<:confusedcat:702072774247579679>'
 
     @staticmethod
     def get_data_frame(ctx, guild):
@@ -136,7 +154,7 @@ class GoogleSheetData(commands.Cog):
 
             embed.add_field(
                 name='\u200b',
-                value=f'__**{list(class_dict.keys())[i].title()} - {list(class_dict.values())[i]}**__\n{roles}', inline=True)
+                value=f'{self.GetEmotes(list(class_dict.keys())[i].title().replace(" ", ""))} __**{list(class_dict.keys())[i].title()} - {list(class_dict.values())[i]}**__\n{roles}', inline=True)
 
         await ctx.channel.send(embed=embed)
 

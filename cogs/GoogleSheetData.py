@@ -128,6 +128,7 @@ class GoogleSheetData(commands.Cog):
     async def bdm_class(self, ctx, guild):
 
         df = self.get_data_frame(ctx, guild)
+        df['Class'] = df['Class'].replace('', 'Unknown')
 
         df['CP'] = pd.to_numeric(df['CP']).fillna(0)
         df['CP'] = df['CP'].round(0).astype(int)

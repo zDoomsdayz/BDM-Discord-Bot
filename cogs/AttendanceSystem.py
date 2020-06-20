@@ -36,8 +36,8 @@ class AttendanceSystem(commands.Cog):
             no_responds = []
 
             # discord bot message design
-            embed = discord.Embed(description =f':loudspeaker: **{question}**', color = discord.Color(0xe81300))
-            embed.set_author(name='XVII Bot | Attendance', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed = discord.Embed(description =f':loudspeaker: **{question}**', color = discord.Color(0xd2f700))
+            embed.set_author(name='XVII Bot | Poll', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             embed.add_field(name='\u200b', value='**✅ Yes - 0**', inline=False)
             embed.add_field(name='\u200b', value='**❌ No - 0**', inline=False)
             embed.add_field(name='\u200b', value='**Waiting for Responds - 0**', inline=False)

@@ -1,5 +1,5 @@
 # Discord Bot Overview
-![Overview](https://github.com/teojiahao/BDM-Discord-Bot/images/BDM-Discord-Bot-Overview.png)
+![Overview](https://raw.githubusercontent.com/teojiahao/BDM-Discord-Bot/master/images/BDM-Discord-Bot-Overview.png)
 
 ## Features
 A Bot that retrieve guild data from my google sheet and display them on discord chat whenever someone uses the bot command:

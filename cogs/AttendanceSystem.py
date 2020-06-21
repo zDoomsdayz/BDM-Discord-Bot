@@ -41,7 +41,7 @@ class AttendanceSystem(commands.Cog):
             embed.add_field(name='\u200b', value='**✅ Yes - 0**', inline=False)
             embed.add_field(name='\u200b', value='**❌ No - 0**', inline=False)
             embed.add_field(name='\u200b', value='**Waiting for Responds - 0**', inline=False)
-            embed.set_footer(text=f'⏰ Time Left: {self.time_left}')
+            embed.set_footer(text=f'⏰ Time Left: ')
             msg = await ctx.channel.send(embed=embed)
 
             await msg.add_reaction('✅')
@@ -90,6 +90,9 @@ class AttendanceSystem(commands.Cog):
                 await asyncio.sleep(1)
 
             self.count_down.stop()
+
+            embed.set_footer(text=f'⏰ Time Left: Ended')
+            await msg.edit(embed=embed)
         except:
             await ctx.channel.send('Remember to include Quotation mark, Command: x!poll "Question" "Roles(Case-sensitive)" "Hours(Default 24hrs if didnt include)"\nExample: `x!poll "Do you watch anime?" "XVII" 48`')
 

@@ -47,7 +47,7 @@ class AttendanceSystem(commands.Cog):
             await msg.add_reaction('✅')
             await msg.add_reaction('❌')
 
-            self.time_left = hours
+            self.time_left = hours + 1
             self.count_down.start()
 
             while self.time_left > 0:

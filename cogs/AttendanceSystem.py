@@ -13,10 +13,16 @@ class AttendanceSystem(commands.Cog):
         self.time_left -= 1
 
     @commands.command()
+    @commands.has_any_role('XVII', 'XVLL')
     async def cpoll(self, ctx):
         self.count_down.cancel()
+    @cpoll.error
+    async def cpoll_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
 
     @commands.command()
+    @commands.has_any_role('XVII', 'XVLL')
     async def poll(self, ctx, question, discord_role, hours=24):
 
         try:
@@ -95,6 +101,9 @@ class AttendanceSystem(commands.Cog):
             await msg.edit(embed=embed)
         except:
             await ctx.channel.send('Remember to include Quotation mark, Command: x!poll "Question" "Roles(Case-sensitive)" "Hours(Default 24hrs if didnt include)"\nExample: `x!poll "Do you watch anime?" "XVII" 48`')
-
+    @poll.error
+    async def poll_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
 def setup(bot):
     bot.add_cog(AttendanceSystem(bot))

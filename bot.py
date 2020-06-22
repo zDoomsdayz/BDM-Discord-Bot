@@ -13,6 +13,7 @@ async def on_ready():
     print('Server up')
 
 @client.command()
+@commands.has_any_role('XVII', 'XVLL')
 async def help(ctx):
     embed = discord.Embed(description='Every command start with `x!`',color = discord.Color(0xecf00e))
     embed.set_author(name='XVII Bot | Help', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
@@ -23,6 +24,10 @@ async def help(ctx):
     embed.add_field(name='__**Node War**__', value='Example: `x!node role` or `x!node all`', inline=False)
     embed.add_field(name='__**Poll**__', value='Remember to include Quotation mark,\nx!poll "Question" "Roles (Case-sensitive)" "Hours (Default 24hrs if didnt include)"\nExample: `x!poll "Do you watch anime?" "XVII" 48`', inline=False)
     await ctx.channel.send(embed=embed)
+@help.error
+async def help_error(ctx, error):
+    if isinstance(error, commands.MissingAnyRole):
+        await ctx.channel.send('**Members Only!**')
 
 extensions = ['cogs.GoogleSheetData','cogs.AttendanceSystem']
 

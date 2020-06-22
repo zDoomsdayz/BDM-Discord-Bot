@@ -45,6 +45,7 @@ class GoogleSheetData(commands.Cog):
         return df
 
     @commands.command()
+    @commands.has_any_role('XVII', 'XVLL')
     async def cp(self, ctx, guild):
 
         try:
@@ -71,9 +72,14 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send(embed=embed)
         except:
             await ctx.channel.send('No Guild Found!')
+    @cp.error
+    async def cp_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
 
 
     @commands.command(name='family', aliases=['fam'])
+    @commands.has_any_role('XVII', 'XVLL')
     async def family(self, ctx, guild):
 
         try:
@@ -96,8 +102,14 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send(embed=embed)
         except:
             await ctx.channel.send('No Guild Found!')
+    @family.error
+    async def family_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
+
 
     @commands.command(name='strength', aliases=['str'])
+    @commands.has_any_role('XVII', 'XVLL')
     async def strength(self, ctx, guild):
 
         try:
@@ -123,8 +135,13 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send(embed=embed)
         except:
             await ctx.channel.send('No Guild Found!')
+    @strength.error
+    async def strength_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='class')
+    @commands.has_any_role('XVII', 'XVLL')
     async def bdm_class(self, ctx, guild):
 
         df = self.get_data_frame(ctx, guild)
@@ -158,8 +175,13 @@ class GoogleSheetData(commands.Cog):
                 value=f'{self.GetEmotes(list(class_dict.keys())[i].title().replace(" ", ""))} __**{list(class_dict.keys())[i].title()} - {list(class_dict.values())[i]}**__\n{roles}', inline=True)
 
         await ctx.channel.send(embed=embed)
+    @bdm_class.error
+    async def bdm_class_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='node')
+    @commands.has_any_role('XVII', 'XVLL')
     async def node(self, ctx, display_type):
 
         if display_type != 'role' and display_type != 'all':
@@ -211,10 +233,15 @@ class GoogleSheetData(commands.Cog):
                     color = discord.Color(0x9bff8a))
             s2_embed.set_author(name=f'XVII Bot | {"".join(strategy2[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             await ctx.channel.send(embed=s2_embed)
+    @node.error
+    async def node_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Members Only!**')
             
 
     ''' #ON HOLD FIRST TILL EVERYTHING IN THE GOOGLESHEET IS DONE PROPERLY
     @commands.command(name='siege')
+    @commands.has_any_role('XVII', 'XVLL')
     async def siege(self, ctx):
 
          # login and open google sheet

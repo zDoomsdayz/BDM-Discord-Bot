@@ -13,16 +13,16 @@ class AttendanceSystem(commands.Cog):
         self.time_left -= 1
 
     @commands.command()
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('Officer')
     async def cpoll(self, ctx):
         self.count_down.cancel()
     @cpoll.error
     async def cpoll_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
-            await ctx.channel.send('**Members Only!**')
+            await ctx.channel.send('**Officer Only!**')
 
     @commands.command()
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('Officer')
     async def poll(self, ctx, question, discord_role, hours=24):
 
         try:
@@ -104,6 +104,6 @@ class AttendanceSystem(commands.Cog):
     @poll.error
     async def poll_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
-            await ctx.channel.send('**Members Only!**')
+            await ctx.channel.send('**Officer Only!**')
 def setup(bot):
     bot.add_cog(AttendanceSystem(bot))

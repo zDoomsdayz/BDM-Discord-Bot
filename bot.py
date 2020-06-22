@@ -12,6 +12,16 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="x!help"))
     print('Server up')
 
+@client.event
+async def on_member_join(member):
+    channel = discord.utils.get(member.guild.channels, id=661865377369948161)
+    await channel.send(f"Hello {member.mention}. Welcome to XVII's Discord Server. Please indicate your IGN. Enjoy your stay!")
+
+@client.event
+async def on_member_remove(member):
+    channel = discord.utils.get(member.guild.channels, id=661865377369948161)
+    await channel.send(f'さようなら ! See you when i see you. {member.display_name}!')
+
 @client.command()
 @commands.has_any_role('XVII', 'XVLL')
 async def help(ctx):

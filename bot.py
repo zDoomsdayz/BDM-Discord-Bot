@@ -14,13 +14,21 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    channel = discord.utils.get(member.guild.channels, id=661865377369948161)
-    await channel.send(f"Hello {member.mention}. Welcome to XVII's Discord Server. Please indicate your IGN. Enjoy your stay!")
+    try:
+        channel = discord.utils.get(member.guild.channels, id=661865377369948161)
+        print(f'{member.display_name} Left {member.guild}')
+        await channel.send(f"Hello {member.mention}. Welcome to XVII's Discord Server. Please indicate your IGN. Enjoy your stay!")
+    except:
+        pass
 
 @client.event
 async def on_member_remove(member):
-    channel = discord.utils.get(member.guild.channels, id=661865377369948161)
-    await channel.send(f'さようなら ! See you when i see you. {member.display_name}!')
+    try:
+        channel = discord.utils.get(member.guild.channels, id=661865377369948161)
+        print(f'{member.display_name} Left {member.guild}')
+        await channel.send(f'さようなら ! See you when i see you. {member.display_name}!')
+    except:
+        pass
 
 @client.command()
 @commands.has_any_role('XVII', 'XVLL')

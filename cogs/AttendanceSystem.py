@@ -105,5 +105,41 @@ class AttendanceSystem(commands.Cog):
     async def poll_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.channel.send('**Officer Only!**')
+
+
+    @commands.command(name='discord', aliases=['dis'])
+    @commands.has_any_role('Officer')
+    async def discord(self, ctx, discord_role):
+        try:
+            g_member = []
+
+            if discord_role == 'Everyone':
+                for member in ctx.guild.members:
+                        g_member.append(member.display_name)
+
+            else:
+                role = discord.utils.get(ctx.guild.roles, name=discord_role)
+
+                for member in ctx.guild.members:
+                    if role in member.roles:
+                        g_member.append(member.display_name)
+
+                if len(g_member) == 0:
+                    await ctx.channel.send('No Such Roles ¯\\_(ツ)_/¯')
+                    return
+
+            g_member.sort()
+
+            # discord bot message design
+            embed = discord.Embed(description = f'**{discord_role} - {len(g_member)}**\n{", ".join(g_member)}', color = discord.Color(0xd2f700))
+            embed.set_author(name=f'XVII Bot | Roles', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            msg = await ctx.channel.send(embed=embed)
+        except:
+            await ctx.channel.send('Wrong Command')
+    @poll.error
+    async def discord_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Officer Only!**')
+
 def setup(bot):
     bot.add_cog(AttendanceSystem(bot))

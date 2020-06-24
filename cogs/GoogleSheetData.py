@@ -4,6 +4,8 @@ import gspread
 import os
 import pandas as pd
 import operator
+import datetime
+import pytz
 
 class GoogleSheetData(commands.Cog):
     def __init__(self, bot):
@@ -198,10 +200,12 @@ class GoogleSheetData(commands.Cog):
         war_member = worksheet.get('C4:C8')
         leader = worksheet.get('B9:B9')
 
+        local_time = datetime.datetime.now(tz=pytz.timezone('Asia/Singapore'))
+
          # discord bot message design
         embed = discord.Embed(color = discord.Color(0x9bff8a))
         embed.set_author(name=f'XVII Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
-
+        embed.set_footer(text=f'As of {local_time.strftime("%d %b %Y @ %H:%M GMT %Z")}')
         for i in range(len(war_role)):
             embed.add_field(
                 name='\u200b',

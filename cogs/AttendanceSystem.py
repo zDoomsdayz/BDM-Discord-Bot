@@ -91,9 +91,9 @@ class AttendanceSystem(commands.Cog):
                 embed.add_field(name='\u200b', value=f'**✅ Yes - {len(yes) - 1}**\n{", ".join(yes[1:])}', inline=False)
                 embed.add_field(name='\u200b', value=f'**❌ No - {len(no) - 1}**\n{", ".join(no[1:])}', inline=False)
                 embed.add_field(name='\u200b', value=f'**Waiting for Responds - {len(no_responds)}**\n{", ".join(no_responds)}', inline=False)
-                embed.set_footer(text=f'⏰ Time Left: {self.time_left}hrs')
+                embed.set_footer(text=f'⏰ Time Left: {self.time_left} hrs')
                 await msg.edit(embed=embed)
-                await asyncio.sleep(1)
+                await asyncio.sleep(3)
 
             self.count_down.stop()
 
@@ -106,6 +106,65 @@ class AttendanceSystem(commands.Cog):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.channel.send('**Officer Only!**')
 
+
+    @commands.command()
+    @commands.has_any_role('Officer')
+    async def pollv2(self, ctx, question, *options: str):
+        if len(options) <= 1:
+            await ctx.channel.send('Error! Please have at least 1 option.')
+            return
+        if len(options) > 10:
+            await ctx.channel.send('Too much options')
+            return
+
+        if len(options) == 2 and options[0].lower() == 'yes' and options[1].lower() == 'no':
+            reactions = ['✅', '❌']
+        else:
+            reactions = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']
+
+        description = []
+        for i, option in enumerate(options):
+            description += f'\n {reactions[i]} {option.title()}'
+
+        embed = discord.Embed(title=f'**{question.title()}**', description=''.join(description), color = discord.Color(0xd2f700))
+        embed.set_author(name='XVII Bot | Poll v2', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+        msg = await ctx.channel.send(embed=embed)
+
+        for reaction in reactions[:len(options)]:
+            await msg.add_reaction(reaction)
+        embed.set_footer(text=f'Poll ID: {msg.id}')
+        await msg.edit(embed=embed)
+    @poll.error
+    async def poll2_error(self, ctx, error):
+        if isinstance(error, commands.MissingAnyRole):
+            await ctx.channel.send('**Officer Only!**')
+
+    @commands.command()
+    async def result(self, ctx, id):
+        try:
+            user_dict = {}
+
+            message = await ctx.channel.fetch_message(id)
+
+            # get the emoji used and add them to dict collection
+            for reaction in message.reactions:
+                async for user in reaction.users():
+                    if user.display_name != 'XVII':
+                        if reaction.emoji not in user_dict.keys():
+                            user_dict[reaction.emoji] = []
+                    
+                        user_dict.setdefault(reaction.emoji, []).append(user.display_name)
+
+            embed = discord.Embed(color = discord.Color(0xd2f700))
+            embed.set_author(name='XVII Bot | Result', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+
+            for k, v in user_dict.items():
+                if len(v) > 0:
+                    embed.add_field(name='\u200b', value=f'**{k} - {len(v)}**\n{", ".join(v)}', inline=False)
+
+            msg = await ctx.channel.send(embed=embed)
+        except:
+            await ctx.channel.send('No ID Found!')
 
     @commands.command(name='discord', aliases=['dis'])
     @commands.has_any_role('Officer')

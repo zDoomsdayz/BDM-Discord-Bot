@@ -42,6 +42,8 @@ async def help(ctx):
     embed.add_field(name='__**Node War**__', value='Example: `x!node role` or `x!node all`', inline=False)
     embed.add_field(name='__**Check Roles**__', value='**x!discord roles or x!dis roles**\nExample: `x!dis Officer`', inline=False)
     embed.add_field(name='__**Poll**__', value='Remember to include Quotation mark,\nx!poll "Question" "Roles (Case-sensitive)" "Hours (Default 24hrs if didnt include)"\nExample: `x!poll "Do you watch anime?" "XVII" 48`', inline=False)
+    embed.add_field(name='__**Poll v2**__', value='Remember to include Quotation mark,\nx!pollv2 "Question" "Options (up to 10)"\nExample: `x!pollv2 "Which guild is stronger" XVII +63 boro memo gala zane`', inline=False)
+    embed.add_field(name='__**Poll v2 Result**__', value='**x!result Poll_ID**\nExample: `x!result 123456`', inline=False)
     await ctx.channel.send(embed=embed)
 @help.error
 async def help_error(ctx, error):

@@ -140,11 +140,14 @@ class AttendanceSystem(commands.Cog):
             await ctx.channel.send('**Officer Only!**')
 
     @commands.command()
-    async def result(self, ctx, id):
+    async def result(self, ctx, discord_channel, id):
         try:
+            discord_channel_cleanup = int(str(discord_channel)[2:-1])
+            c = discord.utils.get(ctx.guild.channels, id=discord_channel_cleanup)
+
             user_dict = {}
 
-            message = await ctx.channel.fetch_message(id)
+            message = await c.fetch_message(id)
 
             # get the emoji used and add them to dict collection
             for reaction in message.reactions:
@@ -161,6 +164,42 @@ class AttendanceSystem(commands.Cog):
             for k, v in user_dict.items():
                 if len(v) > 0:
                     embed.add_field(name='\u200b', value=f'**{k} - {len(v)}**\n{", ".join(v)}', inline=False)
+
+            msg = await ctx.channel.send(embed=embed)
+        except:
+            await ctx.channel.send('No ID Found!')
+
+    @commands.command()
+    async def dr(self, ctx, discord_channel, discord_role, id):
+        try:
+            discord_channel_cleanup = int(str(discord_channel)[2:-1])
+            c = discord.utils.get(ctx.guild.channels, id=discord_channel_cleanup)
+
+            g_member = []
+            member_react = []
+            member_didnt_react = []
+
+            message = await c.fetch_message(id)
+
+            role = discord.utils.get(ctx.guild.roles, name=discord_role)
+
+            for member in ctx.guild.members:
+                if role in member.roles:
+                    g_member.append(member.display_name)
+
+            for reaction in message.reactions:
+                async for user in reaction.users():
+                    if user.display_name not in member_react:
+                        member_react.append(user.display_name)
+
+            for num in g_member:
+                if num not in member_react:
+                    member_didnt_react.append(num)
+
+            embed = discord.Embed(color = discord.Color(0xd2f700))
+            embed.set_author(name='XVII Bot | Didn\'t React', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.add_field(name='\u200b', value=f'**React - {len(member_react)}**\n{", ".join(member_react)}', inline=False)
+            embed.add_field(name='\u200b', value=f'**Didn\'t React - {len(member_didnt_react)}**\n{", ".join(member_didnt_react)}', inline=False)
 
             msg = await ctx.channel.send(embed=embed)
         except:

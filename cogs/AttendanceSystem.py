@@ -205,6 +205,43 @@ class AttendanceSystem(commands.Cog):
         except:
             await ctx.channel.send('No ID Found!')
 
+    @commands.command()
+    async def vc(self, ctx, discord_role):
+        try:
+            g_member = []
+            member_vc = []
+            member_didnt_vc = []
+            channel_dict = {}
+
+            voice_channel_list = ctx.guild.voice_channels
+            role = discord.utils.get(ctx.guild.roles, name=discord_role)
+            
+            for member in ctx.guild.members:
+                if role in member.roles:
+                    g_member.append(member.display_name)
+
+            for voice_channels in voice_channel_list:
+                if len(voice_channels.members) != 0:
+                    for members in voice_channels.members:
+                        member_vc.append(members.display_name)
+                        channel_dict.setdefault(voice_channels.name, []).append(members.display_name)
+
+            for num in g_member:
+                if num not in member_vc:
+                    member_didnt_vc.append(num)
+
+            embed = discord.Embed(color = discord.Color(0xfbe8ff))
+            embed.set_author(name='XVII Bot | Voice Chat', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+
+            for k, v in channel_dict.items():
+                embed.add_field(name='\u200b', value=f'**{k} - {len(v)}**\n{", ".join(v)}', inline=False)
+
+            embed.add_field(name='\u200b', value=f'**Not In Any Voice Channel - {len(member_didnt_vc)}**\n{", ".join(member_didnt_vc)}', inline=False)
+
+            msg = await ctx.channel.send(embed=embed)
+        except:
+            await ctx.channel.send('Wrong Command')
+
     @commands.command(name='discord', aliases=['dis'])
     @commands.has_any_role('Officer')
     async def discord(self, ctx, discord_role):

@@ -46,8 +46,8 @@ class GoogleSheetData(commands.Cog):
 
         return df
 
-    @commands.command()
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.command(name='cp')
+    @commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
     async def cp(self, ctx, guild):
 
         try:
@@ -57,15 +57,14 @@ class GoogleSheetData(commands.Cog):
             df['CP'] = df['CP'].round(0).astype(int)
             df = df.sort_values('CP', ascending=False)
 
-            average = round(df['CP'].mean()).astype(int)
+            #average = round(df['CP'].mean()).astype(int)
 
             text = df.set_index('Family Name')['CP'].to_dict()
             text = '\n'.join([f'`{key}{" " * (24 - len(key))}{value}`' for (key, value) in text.items()])
 
             # discord bot message design
             embed = discord.Embed(description = 
-                f'{guild.upper()} has an average of **{average}** CP\n\n' 
-                + '__**Family Name**__\n'
+                '__**Family Name**__\n'
                 + text, 
                 color = discord.Color(0xe81300))
             embed.set_author(name=f'XVII Bot | {guild.upper()} CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
@@ -81,7 +80,7 @@ class GoogleSheetData(commands.Cog):
 
 
     @commands.command(name='family', aliases=['fam'])
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
     async def family(self, ctx, guild):
 
         try:
@@ -111,7 +110,7 @@ class GoogleSheetData(commands.Cog):
 
 
     @commands.command(name='strength', aliases=['str'])
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
     async def strength(self, ctx, guild):
 
         try:
@@ -143,7 +142,7 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='class')
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
     async def bdm_class(self, ctx, guild):
 
         df = self.get_data_frame(ctx, guild)
@@ -183,7 +182,7 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='node')
-    @commands.has_any_role('XVII', 'XVLL')
+    @commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
     async def node(self, ctx, display_type):
 
         if display_type != 'role' and display_type != 'all':

@@ -17,7 +17,7 @@ async def on_member_join(member):
     try:
         channel = discord.utils.get(member.guild.channels, id=661865377369948161)
         print(f'{member.display_name} Joined {member.guild}')
-        await channel.send(f"Hello {member.mention}. Welcome to XVII's Discord Server. Please indicate your IGN. Enjoy your stay!")
+        await channel.send(f"Hello {member.mention}. Welcome to REIGN's Discord Server. Please indicate your IGN. Enjoy your stay!")
     except:
         pass
 
@@ -31,7 +31,7 @@ async def on_member_remove(member):
         pass
 
 @client.command()
-@commands.has_any_role('XVII', 'XVLL')
+@commands.has_any_role('REIGN', 'RELGN', 'RÉเGИ')
 async def help(ctx):
     embed = discord.Embed(description='Every command start with `x!`',color = discord.Color(0xecf00e))
     embed.set_author(name='XVII Bot | Help', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')

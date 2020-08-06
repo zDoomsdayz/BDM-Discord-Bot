@@ -40,7 +40,7 @@ class GoogleSheetData(commands.Cog):
         worksheet = sh.worksheet(guild.upper())
 
         # create a dataframe from the data here
-        guild_data = worksheet.get('B5:F53')
+        guild_data = worksheet.get('B5:F54')
         headers = guild_data.pop(0)
         df = pd.DataFrame(guild_data, columns=headers)
 

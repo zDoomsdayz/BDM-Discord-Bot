@@ -189,9 +189,12 @@ class AttendanceSystem(commands.Cog):
 
             for reaction in message.reactions:
                 async for user in reaction.users():
-                    if role in user.roles:
-                        if user.display_name not in member_react:
-                            member_react.append(user.display_name)
+                    if user.display_name not in member_react:
+                        try:
+                            if role in user.roles:
+                                member_react.append(user.display_name)
+                        except:
+                            print(f'{user} not found')
 
             for num in g_member:
                 if num not in member_react:

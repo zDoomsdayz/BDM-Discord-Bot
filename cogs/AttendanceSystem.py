@@ -2,6 +2,9 @@ import discord
 from discord.ext import tasks, commands
 import asyncio
 import time
+import os
+
+GUILDNAME = os.getenv('GNAME')
 
 class AttendanceSystem(commands.Cog):
     def __init__(self, bot):
@@ -21,6 +24,7 @@ class AttendanceSystem(commands.Cog):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.channel.send('**Officer Only!**')
 
+    """
     @commands.command()
     @commands.has_any_role('Officer')
     async def poll(self, ctx, question, discord_role, hours=24):
@@ -43,7 +47,7 @@ class AttendanceSystem(commands.Cog):
 
             # discord bot message design
             embed = discord.Embed(description =f':loudspeaker: **{question}**', color = discord.Color(0xd2f700))
-            embed.set_author(name='FENRIR Bot | Poll', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | Poll', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             embed.add_field(name='\u200b', value='**✅ Yes - 0**', inline=False)
             embed.add_field(name='\u200b', value='**❌ No - 0**', inline=False)
             embed.add_field(name='\u200b', value='**Waiting for Responds - 0**', inline=False)
@@ -104,8 +108,7 @@ class AttendanceSystem(commands.Cog):
     @poll.error
     async def poll_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
-            await ctx.channel.send('**Officer Only!**')
-
+            await ctx.channel.send('**Officer Only!**')"""
 
     @commands.command()
     @commands.has_any_role('Officer')
@@ -127,14 +130,14 @@ class AttendanceSystem(commands.Cog):
             description += f'\n {reactions[i]} {option.title()}'
 
         embed = discord.Embed(title=f'**{question.title()}**', description=''.join(description), color = discord.Color(0xd2f700))
-        embed.set_author(name='FENRIR Bot | Poll v2', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+        embed.set_author(name=f'{GUILDNAME} Bot | Poll v2', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
         msg = await ctx.channel.send(embed=embed)
 
         for reaction in reactions[:len(options)]:
             await msg.add_reaction(reaction)
         embed.set_footer(text=f'Poll ID: {msg.id}')
         await msg.edit(embed=embed)
-    @poll.error
+    @pollv2.error
     async def poll2_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.channel.send('**Officer Only!**')
@@ -159,7 +162,7 @@ class AttendanceSystem(commands.Cog):
                         user_dict.setdefault(reaction.emoji, []).append(user.display_name)
 
             embed = discord.Embed(color = discord.Color(0xd2f700))
-            embed.set_author(name='FENRIR Bot | Result', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | Result', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
             for k, v in user_dict.items():
                 if len(v) > 0:
@@ -204,7 +207,7 @@ class AttendanceSystem(commands.Cog):
             member_didnt_react.sort()
 
             embed = discord.Embed(color = discord.Color(0xd2f700))
-            embed.set_author(name='FENRIR Bot | Reactions', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | Reactions', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             embed.add_field(name='\u200b', value=f'**React - {len(member_react)}**\n{", ".join(member_react)}', inline=False)
             embed.add_field(name='\u200b', value=f'**Didn\'t React - {len(member_didnt_react)}**\n{", ".join(member_didnt_react)}', inline=False)
 
@@ -241,7 +244,7 @@ class AttendanceSystem(commands.Cog):
             member_didnt_vc.sort()
 
             embed = discord.Embed(color = discord.Color(0xfbe8ff))
-            embed.set_author(name='FENRIR Bot | Voice Chat', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | Voice Chat', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
             for k, v in channel_dict.items():
                 embed.add_field(name='\u200b', value=f'**{k} - {len(v)}**\n{", ".join(v)}', inline=False)
@@ -277,11 +280,11 @@ class AttendanceSystem(commands.Cog):
 
             # discord bot message design
             embed = discord.Embed(description = f'**{discord_role} - {len(g_member)}**\n{", ".join(g_member)}', color = discord.Color(0xd2f700))
-            embed.set_author(name=f'FENRIR Bot | Roles', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | Roles', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             msg = await ctx.channel.send(embed=embed)
         except:
             await ctx.channel.send('Wrong Command')
-    @poll.error
+    @discord.error
     async def discord_error(self, ctx, error):
         if isinstance(error, commands.MissingAnyRole):
             await ctx.channel.send('**Officer Only!**')

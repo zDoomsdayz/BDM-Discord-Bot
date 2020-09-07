@@ -7,6 +7,8 @@ import operator
 import datetime
 import pytz
 
+GUILDNAME = os.getenv('GNAME')
+
 class GoogleSheetData(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -34,6 +36,7 @@ class GoogleSheetData(commands.Cog):
             "Destroyer":741249479096926239,
             "Berserker":741249478954188831,
             "Archmage":741249479252115607,
+            "Hasashin":752421351322812427,
             "confusedcat":702072774247579679,
             }
 
@@ -55,14 +58,14 @@ class GoogleSheetData(commands.Cog):
         worksheet = sh.worksheet(guild.upper())
 
         # create a dataframe from the data here
-        guild_data = worksheet.get('B5:F54')
+        guild_data = worksheet.get('B5:E54')
         headers = guild_data.pop(0)
         df = pd.DataFrame(guild_data, columns=headers)
 
         return df
 
     @commands.command(name='cp')
-    @commands.has_any_role('FENRIR彡', 'FENRLR彡', 'FEИRIR彡')
+    @commands.has_any_role(718529846829121557, 749635540659470346, 749635896080334889, 702807295322619945, 736886448933830666)
     async def cp(self, ctx, guild):
 
         try:
@@ -82,7 +85,7 @@ class GoogleSheetData(commands.Cog):
                 '__**Family Name**__\n'
                 + text, 
                 color = discord.Color(0xe81300))
-            embed.set_author(name=f'FENRIR Bot | {guild.upper()} CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | {guild.upper()} CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
 
             await ctx.channel.send(embed=embed)
@@ -95,7 +98,7 @@ class GoogleSheetData(commands.Cog):
 
 
     @commands.command(name='family', aliases=['fam'])
-    @commands.has_any_role('FENRIR彡', 'FENRLR彡', 'FEИRIR彡')
+    @commands.has_any_role(718529846829121557, 749635540659470346, 749635896080334889, 702807295322619945, 736886448933830666)
     async def family(self, ctx, guild):
 
         try:
@@ -113,7 +116,7 @@ class GoogleSheetData(commands.Cog):
                 '\n__**Family Name**__\n'
                 + text, 
                 color = discord.Color(0x08ffde))
-            embed.set_author(name=f'FENRIR Bot | {guild.upper()} Family CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | {guild.upper()} Family CP', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
             await ctx.channel.send(embed=embed)
         except:
@@ -125,7 +128,7 @@ class GoogleSheetData(commands.Cog):
 
 
     @commands.command(name='strength', aliases=['str'])
-    @commands.has_any_role('FENRIR彡', 'FENRLR彡', 'FEИRIR彡')
+    @commands.has_any_role(718529846829121557, 749635540659470346, 749635896080334889, 702807295322619945, 736886448933830666)
     async def strength(self, ctx, guild):
 
         try:
@@ -145,7 +148,7 @@ class GoogleSheetData(commands.Cog):
                 '\n__**Statistics**__\n'
                 + text, 
                 color = discord.Color(0x8934ba))
-            embed.set_author(name=f'FENRIR Bot | {guild.upper()} Strength', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            embed.set_author(name=f'{GUILDNAME} Bot | {guild.upper()} Strength', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
 
             await ctx.channel.send(embed=embed)
@@ -157,7 +160,7 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='class')
-    @commands.has_any_role('FENRIR彡', 'FENRLR彡', 'FEИRIR彡')
+    @commands.has_any_role(718529846829121557, 749635540659470346, 749635896080334889, 702807295322619945, 736886448933830666)
     async def bdm_class(self, ctx, guild):
 
         df = self.get_data_frame(ctx, guild)
@@ -177,7 +180,7 @@ class GoogleSheetData(commands.Cog):
 
          # discord bot message design
         embed = discord.Embed(color = discord.Color(0xfdb8ff))
-        embed.set_author(name=f'FENRIR Bot | {guild.upper()} Class', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+        embed.set_author(name=f'{GUILDNAME} Bot | {guild.upper()} Class', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
 
         # display the group of class
         for i in range(num_of_diff_class.count()): 
@@ -197,7 +200,7 @@ class GoogleSheetData(commands.Cog):
             await ctx.channel.send('**Members Only!**')
 
     @commands.command(name='node')
-    @commands.has_any_role('FENRIR彡', 'FENRLR彡', 'FEИRIR彡')
+    @commands.has_any_role(718529846829121557, 749635540659470346, 749635896080334889, 702807295322619945, 736886448933830666)
     async def node(self, ctx, display_type):
 
         if display_type != 'role' and display_type != 'all':
@@ -218,7 +221,7 @@ class GoogleSheetData(commands.Cog):
 
          # discord bot message design
         embed = discord.Embed(color = discord.Color(0x9bff8a))
-        embed.set_author(name=f'FENRIR Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+        embed.set_author(name=f'{GUILDNAME} Bot | Node War', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
         embed.set_footer(text=f'As of {local_time.strftime("%d %b %Y @ %H:%M GMT %Z")}')
         for i in range(len(war_role)):
             embed.add_field(
@@ -241,7 +244,7 @@ class GoogleSheetData(commands.Cog):
             s1_embed = discord.Embed(description = 
                     f'{"".join(strategy1[1])}',
                     color = discord.Color(0x9bff8a))
-            s1_embed.set_author(name=f'FENRIR Bot | {"".join(strategy1[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            s1_embed.set_author(name=f'{GUILDNAME} Bot | {"".join(strategy1[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             await ctx.channel.send(embed=s1_embed)
 
             # strategy2 embed design
@@ -249,7 +252,7 @@ class GoogleSheetData(commands.Cog):
             s2_embed = discord.Embed(description = 
                     f'{"".join(strategy2[1])}',
                     color = discord.Color(0x9bff8a))
-            s2_embed.set_author(name=f'FENRIR Bot | {"".join(strategy2[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
+            s2_embed.set_author(name=f'{GUILDNAME} Bot | {"".join(strategy2[0])}', icon_url='https://cdn.discordapp.com/attachments/661862380996919325/693228158559977542/image0.jpg')
             await ctx.channel.send(embed=s2_embed)
     @node.error
     async def node_error(self, ctx, error):
